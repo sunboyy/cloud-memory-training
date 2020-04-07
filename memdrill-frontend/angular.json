@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "memdrill-frontend"
+    }
+  },
+  "defaultProject": "memdrill-frontend",
+  "cli": {
+    "analytics": false
+  }
 }
