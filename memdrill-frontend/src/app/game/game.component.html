@@ -1,0 +1,7 @@
+<p>game works!</p>
+<form>
+  <input type="text" name="message" placeholder="0" [(ngModel)]="message">
+  <button (click)="onSubmit()">Play</button>
+
+  <audio #myAudio [src]="audioSrc"></audio>
+</form>
