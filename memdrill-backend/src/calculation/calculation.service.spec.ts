@@ -1,8 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { CalculationService } from './calculation.service';
 import { RandomGeneratorService } from './random-generator/random-generator.service';
 import { RandomGeneratorMockService } from './random-generator/random-generator-mock.service';
 import { Calculation } from './calculation.entity';
+import { User } from '../user/user.entity';
 
 describe('CalculationService', () => {
   let service: CalculationService;
@@ -12,6 +14,15 @@ describe('CalculationService', () => {
       providers: [
         CalculationService,
         { provide: RandomGeneratorService, useClass: RandomGeneratorMockService },
+      ],
+      imports: [
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: ':memory:',
+          synchronize: true,
+          entities: [Calculation, User],
+        }),
+        TypeOrmModule.forFeature([Calculation, User]),
       ],
     }).compile();
 
@@ -54,6 +65,24 @@ describe('CalculationService', () => {
       expect(service.checkAnswer(calculation)).toBe(true);
       calculation.answer--;
       expect(service.checkAnswer(calculation)).toBe(false);
+    });
+  });
+
+  describe('calculate', () => {
+    it('should return undefined if operator is not supported', () => {
+      const calculation = new Calculation();
+      calculation.factorA = 2;
+      calculation.factorB = 3;
+      calculation.operator = 'mul';
+      expect(service.calculate(calculation)).toBeUndefined();
+    });
+
+    it('should return added value for add operator', () => {
+      const calculation = new Calculation();
+      calculation.factorA = 2;
+      calculation.factorB = 3;
+      calculation.operator = 'add';
+      expect(service.calculate(calculation)).toBe(5);
     });
   });
 

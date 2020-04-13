@@ -24,6 +24,6 @@ export class AuthService {
     }
     const user = userResult.getValue();
     const payload = { userId: user.id };
-    return Result.ok({ access_token: this.jwtService.sign(payload) });
+    return Result.ok({ accessToken: this.jwtService.sign(payload) });
   }
 }

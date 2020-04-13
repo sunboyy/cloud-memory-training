@@ -1,31 +1,48 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { createHash } from 'crypto';
+import { Repository } from 'typeorm';
 import { Calculation } from './calculation.entity';
 import { RandomGeneratorService } from './random-generator/random-generator.service';
-import { createHash } from 'crypto';
+import { Result } from '../common/result';
 
 @Injectable()
 export class CalculationService {
   private signatureKey = 'secretkey';
 
-  constructor(private readonly randomGeneratorService: RandomGeneratorService) {}
+  constructor(
+    private readonly randomGeneratorService: RandomGeneratorService,
+    @InjectRepository(Calculation) private readonly calculationRepository: Repository<Calculation>,
+  ) {}
 
   createRandomCalculation(): Calculation {
     const calculation = new Calculation();
     calculation.factorA = this.randomGeneratorService.generateRandomFactor();
     calculation.factorB = this.randomGeneratorService.generateRandomFactor();
-    calculation.operator = 'add';
+    calculation.operator = this.randomGeneratorService.generateRandomOperator();
     calculation.signature = this.createSignature(calculation);
     return calculation;
   }
 
-  checkAnswer(calculation: Calculation): boolean {
+  async submitCalculation(calculation: Calculation): Promise<Result<undefined>> {
     if (!this.verifySignature(calculation)) {
-      return false;
+      return Result.fail('Invalid signature');
     }
+    if (!this.checkAnswer(calculation)) {
+      return Result.fail('Incorrect answer');
+    }
+    await this.calculationRepository.save(calculation);
+    return Result.ok(undefined);
+  }
+
+  checkAnswer(calculation: Calculation): boolean {
+    return this.calculate(calculation) === calculation.answer;
+  }
+
+  calculate(calculation: Calculation): number | undefined {
     if (calculation.operator === 'add') {
-      return calculation.factorA + calculation.factorB === calculation.answer;
+      return calculation.factorA + calculation.factorB;
     }
-    return false;
   }
 
   createSignature(calculation: Calculation): string {

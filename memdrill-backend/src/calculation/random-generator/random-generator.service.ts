@@ -10,4 +10,8 @@ export class RandomGeneratorService {
       Math.floor(Math.random() * (this.maximumFactor - this.minimumFactor + 1)) + this.minimumFactor
     );
   }
+
+  generateRandomOperator(): string {
+    return 'add';
+  }
 }

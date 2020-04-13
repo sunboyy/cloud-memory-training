@@ -8,4 +8,8 @@ export class RandomGeneratorMockService {
   generateRandomFactor(): number {
     return (this.maximumFactor + this.minimumFactor) / 2;
   }
+
+  generateRandomOPerator(): string {
+    return 'add';
+  }
 }
