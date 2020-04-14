@@ -14,16 +14,16 @@ export class AuthService {
 
   login(username: string, password: string): Observable<boolean> {
     return this.http
-      .post<{ access_token: string }>(environment.baseApiUrl + 'auth/login', {
+      .post<{ accessToken: string }>(environment.baseApiUrl + 'auth/login', {
         user: { username, password }
       })
       .pipe(
-        catchError((err) => of({ access_token: '' })),
+        catchError((err) => of({ accessToken: '' })),
         map((result) => {
-          if (result.access_token !== '') {
-            sessionStorage.setItem(this.ACCESS_TOKEN_KEY, result.access_token);
+          if (result.accessToken !== '') {
+            sessionStorage.setItem(this.ACCESS_TOKEN_KEY, result.accessToken);
           }
-          return result.access_token !== '';
+          return result.accessToken !== '';
         })
       );
   }

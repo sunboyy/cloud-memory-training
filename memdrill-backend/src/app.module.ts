@@ -5,6 +5,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/user.entity';
+import { CalculationModule } from './calculation/calculation.module';
+import { Calculation } from './calculation/calculation.entity';
+import { GoogleApiModule } from './google-api/google-api.module';
 
 @Module({
   imports: [
@@ -17,12 +20,14 @@ import { User } from './user/user.entity';
         password: configService.get<string>('MYSQL_PASSWORD', ''),
         database: 'memdrill',
         synchronize: true,
-        entities: [User],
+        entities: [User, Calculation],
         charset: 'utf8mb4',
       }),
       inject: [ConfigService],
     }),
     AuthModule,
+    CalculationModule,
+    GoogleApiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

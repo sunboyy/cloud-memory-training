@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from './user.service';
+import { TextToSpeechService } from './text-to-speech.service';
 
-describe('UserService', () => {
-  let service: UserService;
+describe('TextToSpeechService', () => {
+  let service: TextToSpeechService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UserService],
+      providers: [TextToSpeechService],
     }).compile();
 
-    service = module.get<UserService>(UserService);
+    service = module.get<TextToSpeechService>(TextToSpeechService);
   });
 
   it('should be defined', () => {
