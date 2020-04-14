@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Calculation } from './calculation.entity';
 import { RandomGeneratorService } from './random-generator/random-generator.service';
 import { Result } from '../common/result';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class CalculationService {
@@ -25,15 +26,15 @@ export class CalculationService {
     return calculation;
   }
 
-  async submitCalculation(calculation: Calculation): Promise<Result<undefined>> {
+  async submitCalculation(calculation: Calculation): Promise<Result<string>> {
     if (!this.verifySignature(calculation)) {
       return Result.fail('Invalid signature');
     }
-    if (!this.checkAnswer(calculation)) {
-      return Result.fail('Incorrect answer');
-    }
     await this.calculationRepository.save(calculation);
-    return Result.ok(undefined);
+    if (!this.checkAnswer(calculation)) {
+      return Result.ok('Incorrect');
+    }
+    return Result.ok('Correct');
   }
 
   checkAnswer(calculation: Calculation): boolean {
@@ -65,5 +66,30 @@ export class CalculationService {
   verifySignature(calculation: Calculation): boolean {
     const realSignature = this.createSignature(calculation);
     return realSignature == calculation.signature;
+  }
+
+  async getStats(user: User) {
+    const calculations = await this.calculationRepository.find({ where: { user } });
+    const correctCalculations = calculations.filter(calculation => this.checkAnswer(calculation));
+    const totalScore = correctCalculations
+      .map(calculation => this.getScore(calculation))
+      .reduce((a, b) => a + b);
+    return {
+      totalCalculations: calculations.length,
+      correctCalculations: correctCalculations.length,
+      totalScore,
+    };
+  }
+
+  getScore(calculation: Calculation): number {
+    const difficulty = calculation.difficulty;
+    if (difficulty === 'easy') {
+      return 1;
+    } else if (difficulty === 'normal') {
+      return 2;
+    } else if (difficulty === 'hard') {
+      return 3;
+    }
+    return 0;
   }
 }

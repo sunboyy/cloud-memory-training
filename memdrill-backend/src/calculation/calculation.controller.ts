@@ -36,4 +36,10 @@ export class CalculationController {
     calculation.user = req.user;
     return this.calculationService.submitCalculation(calculation);
   }
+
+  @Get('stats')
+  @UseGuards(AuthGuard('jwt'))
+  getStats(@Request() req) {
+    return this.calculationService.getStats(req.user);
+  }
 }
