@@ -9,7 +9,7 @@ import { User } from '../user/user.entity';
 describe('CalculationService', () => {
   let service: CalculationService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CalculationService,
@@ -35,20 +35,13 @@ describe('CalculationService', () => {
 
   describe('createRandomCalculation', () => {
     it('should return factor from RandomGenerator', () => {
-      const calculation = service.createRandomCalculation();
+      const calculation = service.createRandomCalculation('easy');
       expect(calculation.factorA).toBe(15);
       expect(calculation.factorB).toBe(15);
     });
   });
 
   describe('checkAnswer', () => {
-    it('should reject incorrect signature', () => {
-      const calculation = service.createRandomCalculation();
-      calculation.factorA++;
-      calculation.answer = calculation.factorA + calculation.factorB;
-      expect(service.checkAnswer(calculation)).toBe(false);
-    });
-
     it('should return false if operator is not supported', () => {
       const calculation = new Calculation();
       calculation.factorA = 2;
@@ -60,7 +53,7 @@ describe('CalculationService', () => {
     });
 
     it('should verify correctness of the answer', () => {
-      const calculation = service.createRandomCalculation();
+      const calculation = service.createRandomCalculation('easy');
       calculation.answer = calculation.factorA + calculation.factorB;
       expect(service.checkAnswer(calculation)).toBe(true);
       calculation.answer--;
@@ -83,6 +76,14 @@ describe('CalculationService', () => {
       calculation.factorB = 3;
       calculation.operator = 'add';
       expect(service.calculate(calculation)).toBe(5);
+    });
+
+    it('should return subtracted value for sub operator', () => {
+      const calculation = new Calculation();
+      calculation.factorA = 2;
+      calculation.factorB = 3;
+      calculation.operator = 'sub';
+      expect(service.calculate(calculation)).toBe(-1);
     });
   });
 

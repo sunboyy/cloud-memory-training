@@ -15,6 +15,9 @@ export class Calculation {
   @Column('varchar', { length: 50 })
   operator: string;
 
+  @Column('varchar', { length: 20 })
+  difficulty: string;
+
   @Column('int')
   answer: number;
 

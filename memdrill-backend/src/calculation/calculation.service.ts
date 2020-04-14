@@ -15,11 +15,12 @@ export class CalculationService {
     @InjectRepository(Calculation) private readonly calculationRepository: Repository<Calculation>,
   ) {}
 
-  createRandomCalculation(): Calculation {
+  createRandomCalculation(difficulty: string): Calculation {
     const calculation = new Calculation();
-    calculation.factorA = this.randomGeneratorService.generateRandomFactor();
-    calculation.factorB = this.randomGeneratorService.generateRandomFactor();
+    calculation.factorA = this.randomGeneratorService.generateRandomFactor(difficulty);
+    calculation.factorB = this.randomGeneratorService.generateRandomFactor(difficulty);
     calculation.operator = this.randomGeneratorService.generateRandomOperator();
+    calculation.difficulty = difficulty;
     calculation.signature = this.createSignature(calculation);
     return calculation;
   }
@@ -42,13 +43,21 @@ export class CalculationService {
   calculate(calculation: Calculation): number | undefined {
     if (calculation.operator === 'add') {
       return calculation.factorA + calculation.factorB;
+    } else if (calculation.operator === 'sub') {
+      return calculation.factorA - calculation.factorB;
     }
   }
 
   createSignature(calculation: Calculation): string {
     const shasum = createHash('sha1');
     const payload =
-      calculation.factorA + calculation.factorB + calculation.operator + ':' + this.signatureKey;
+      calculation.factorA +
+      calculation.factorB +
+      calculation.operator +
+      ':' +
+      calculation.difficulty +
+      ':' +
+      this.signatureKey;
     shasum.update(payload);
     return shasum.digest('hex');
   }

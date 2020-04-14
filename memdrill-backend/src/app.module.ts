@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './user/user.entity';
 import { CalculationModule } from './calculation/calculation.module';
 import { Calculation } from './calculation/calculation.entity';
+import { GoogleApiModule } from './google-api/google-api.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { Calculation } from './calculation/calculation.entity';
     }),
     AuthModule,
     CalculationModule,
+    GoogleApiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -20,9 +20,9 @@ describe('Calculation Controller', () => {
   });
 
   describe('GET /calculation/random', () => {
-    it('should return calculation', async () => {
-      const providedCalculation = controller['calculationService'].createRandomCalculation();
-      const calculation = controller.getRandomCalculation();
+    it('should return calculation result', async () => {
+      const providedCalculation = controller['calculationService'].createRandomCalculation('easy');
+      const calculation = controller.getRandomCalculation('easy').getValue();
       expect(calculation.factorA).toEqual(providedCalculation.factorA);
       expect(calculation.factorB).toEqual(providedCalculation.factorB);
       expect(calculation.operator).toEqual(providedCalculation.operator);

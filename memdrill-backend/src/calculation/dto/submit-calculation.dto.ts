@@ -7,8 +7,11 @@ export class SubmitCalculationDto {
   @IsInt()
   factorB: number;
 
-  @IsIn(['add'])
+  @IsIn(['add', 'sub'])
   operator: string;
+
+  @IsIn(['easy', 'normal', 'hard'])
+  difficulty: string;
 
   @IsInt()
   answer: number;
