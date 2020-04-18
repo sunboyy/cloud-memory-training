@@ -4,3 +4,25 @@
   font-family: Homework;
   src: url('assets/fonts/homework.ttf');
 }
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'),
+    url('/assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+}
+
+html {
+  background: url('/assets/images/background.png') no-repeat center center fixed;
+  // background-size: cover;
+}
+
+body {
+  margin: 0px;
+  font-family: Roboto, Pridi, serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: Homework, Kanit, serif;
+  margin: 16px 0;
+}

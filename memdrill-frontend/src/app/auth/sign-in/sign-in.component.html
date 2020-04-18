@@ -1,9 +1,11 @@
-<form>
+<div class="container">
   <h2>Login</h2>
-  <input type="text" name="username" placeholder="Username" [(ngModel)]="username">
-  <input type="password" name="password" placeholder="Password" [(ngModel)]="password">
-  <button (click)="onSubmit()">Submit</button>
+  <form>
+    <input type="text" name="username" placeholder="Username" [(ngModel)]="username">
+    <input type="password" name="password" placeholder="Password" [(ngModel)]="password">
+    <button (click)="onSubmit()">Submit</button>
 
-  <p *ngIf="message">{{message}}</p>
-  <p><a routerLink="/user/register">Register</a></p>
-</form>
+    <p *ngIf="message">{{message}}</p>
+  </form>
+  <p>No account? <a routerLink="/user/register">Register</a></p>
+</div>
