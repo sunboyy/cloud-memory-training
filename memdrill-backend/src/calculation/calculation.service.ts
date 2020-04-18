@@ -73,7 +73,7 @@ export class CalculationService {
     const correctCalculations = calculations.filter(calculation => this.checkAnswer(calculation));
     const totalScore = correctCalculations
       .map(calculation => this.getScore(calculation))
-      .reduce((a, b) => a + b);
+      .reduce((a, b) => a + b, 0);
     return {
       totalCalculations: calculations.length,
       correctCalculations: correctCalculations.length,

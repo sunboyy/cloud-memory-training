@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+  backend:
+    image: memdrill-backend
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PASSWORD: password
+      JWT_SECRET: supersecret
+    ports:
+      - 3000:3000
+    links:
+      - db
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+    ports:
+      - 8080:80
+    links:
+      - db
