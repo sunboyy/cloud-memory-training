@@ -5,10 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GameComponent } from './game.component';
+import { LevelComponent } from './level/level.component';
 
 
 @NgModule({
-  declarations: [GameComponent],
+  declarations: [GameComponent, LevelComponent],
   imports: [
     CommonModule, FormsModule, HttpClientModule, RouterModule
   ]

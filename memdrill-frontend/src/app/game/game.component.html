@@ -1,3 +1,4 @@
+<div style="display: none;">
 <p>game works!</p>
 <form>
   <input type="text" name="message" placeholder="0" [(ngModel)]="message">
@@ -24,7 +25,13 @@
 
 <p>Volume</p>
 <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5"/>
+</div>
 
+<!------------------------ edit section --------------------------->
+<app-level (level)="getQuestion($event)"></app-level>
+<p style="text-align: center">{{question}}</p>
+
+<!-- ----------------------------------------------------------- -->
 
     <script>
       const recordAudio = () =>
