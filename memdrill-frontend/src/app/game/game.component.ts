@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { QuestionService, QuestionResponse } from './question.service';
+import { ListenService } from './listen.service';
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -19,7 +21,7 @@ export class GameComponent {
 
   @ViewChild('myAudio') myAudio: ElementRef;
 
-  constructor(private questionService: QuestionService) {}
+  constructor(private questionService: QuestionService, private listenService: ListenService) {}
 
   playSound() {
     this.myAudio.nativeElement.play();
@@ -48,7 +50,12 @@ export class GameComponent {
     });
     //TODO: call Text To Speech and play sound here
   }
-
+  listen() {
+    this.listenService.triggerListen();
+  }
+  stop_listen(){
+    this.listenService.stop_listen();
+  }
 
 
 }
