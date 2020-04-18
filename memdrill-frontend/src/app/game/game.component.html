@@ -1,0 +1,20 @@
+<p>game works!</p>
+<form>
+  <input type="text" name="message" placeholder="0" [(ngModel)]="message">
+  <button (click)="playSound()">Play</button>
+
+  <audio #myAudio [src]="audioSrc"></audio>
+</form>
+
+<form action="/calculation/random">
+  <label for="difficulty">Difficulty:</label>
+  <select id="difficulty" name="difficulty" [(ngModel)]="difficulty">
+    <option value="easy">easy</option>
+    <option value="normal">normal</option>
+    <option value="hard">hard</option>
+  </select>
+  <input (click)="getQuestion(difficulty)" type="submit" value="get question">
+</form>
+
+<p>{{question}}</p>
+
