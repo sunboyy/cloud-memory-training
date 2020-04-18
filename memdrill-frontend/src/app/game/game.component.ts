@@ -7,17 +7,15 @@ import { ListenService } from './listen.service';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-
 export class GameComponent {
-
   message = '0';
 
   question = 'no question';
   difficulty = 'easy';
-  A;
-  B;
-  op;
-  sig;
+  A: number;
+  B: number;
+  op: string;
+  sig: string;
 
   @ViewChild('myAudio') myAudio: ElementRef;
 
@@ -28,34 +26,40 @@ export class GameComponent {
   }
 
   get audioSrc() {
-    return '/assets/voice/'+this.message+'.wav'
+    return '/assets/voice/' + this.message + '.wav';
   }
 
   getQuestion(difficulty: string): any {
     console.log(difficulty);
-    this.questionService.getQuestion(difficulty).subscribe(result => {
-      if(result.success === true){
-        var value = result.value;
+    this.questionService.getQuestion(difficulty).subscribe((result) => {
+      if (result.success === true) {
+        const value = result.value;
         this.A = value.factorA;
         this.B = value.factorB;
         this.op = value.operator;
         this.sig = value.signature;
-        if(value.operator === 'add'){
+        if (value.operator === 'add') {
           this.question = `${this.A} + ${this.B} = ?`;
-        }
-        else{
+        } else {
           this.question = `${this.A} - ${this.B} = ?`;
         }
       }
     });
     //TODO: call Text To Speech and play sound here
   }
-  listen() {
-    this.listenService.triggerListen();
-  }
-  stop_listen(){
-    this.listenService.stop_listen();
+
+  async listen() {
+    console.log('owoๅ');
+    const url = await this.listenService.triggerListen();
+    console.log(url);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'audio_recording_' + new Date().getTime() + '.wav';
+    link.innerHTML = 'download file';
+    document.body.appendChild(link);
   }
 
-
+  stopListen() {
+    this.listenService.stopListen();
+  }
 }
