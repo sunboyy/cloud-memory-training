@@ -1,21 +1,12 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class ListenService {
-
-  chunks = [];
-  stream = null;
-  recorder = null;
-  MediaRecorder;
-  constructor() { }
-
-  stop_listen() {
-
-  }
-  triggerListen() {
-    const recordAudio = () =>
+﻿<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Replay_3s</title>
+  </head>
+  <body>
+    <script>
+      const recordAudio = () =>
         new Promise(async (resolve) => {
           const stream = await navigator.mediaDevices.getUserMedia({
             audio: true,
@@ -55,6 +46,6 @@ export class ListenService {
         const audio = await recorder.stop();
         audio.play();
       })();
-    }
-
-}
+    </script>
+  </body>
+</html>
