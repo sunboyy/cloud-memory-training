@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalculationService } from '../calculation.service';
+import { Stat } from './stat';
 
 @Component({
   selector: 'app-stat',
@@ -8,11 +9,14 @@ import { CalculationService } from '../calculation.service';
 })
 export class StatComponent implements OnInit {
 
+  stat: Stat;
+
   constructor(private calculationService: CalculationService) { }
 
   ngOnInit(): void {
     this.calculationService.stats().subscribe((result) => {
-      console.log(result.correctCalculations);
+      console.log(result);
+      this.stat = result;
     });
   }
 
