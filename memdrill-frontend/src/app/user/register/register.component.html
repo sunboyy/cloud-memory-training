@@ -1,0 +1,9 @@
+<form>
+  <h2>Register</h2>
+  <input type="text" name="username" placeholder="Username" [(ngModel)]="username" />
+  <input type="password" name="password" placeholder="Password" [(ngModel)]="password" />
+  <button (click)="onSubmit()">Submit</button>
+
+  <p *ngIf="message">{{ message }}</p>
+  <p><a routerLink="/auth/login">Login</a></p>
+</form>
