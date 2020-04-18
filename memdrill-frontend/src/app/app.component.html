@@ -1,3 +1,5 @@
-<router-outlet></router-outlet>
+<app-nav></app-nav>
 
-<button *ngIf="isLoggedIn()" (click)="onLogout()">Logout</button>
+<div class="route-container">
+  <router-outlet></router-outlet>
+</div>

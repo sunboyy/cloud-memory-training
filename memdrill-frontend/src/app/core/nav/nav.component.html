@@ -1,0 +1,11 @@
+<div class="nav">
+  <div class="title" routerLink="/">
+    Memdrill
+  </div>
+  <div class="auth" *ngIf="!isLoggedIn" routerLink="/auth/login">
+    Login
+  </div>
+  <div class="auth" *ngIf="isLoggedIn" (click)="onLogout()">
+    Logout
+  </div>
+</div>
