@@ -10,12 +10,17 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   username = '';
   password = '';
+  confirmPassword = '';
 
   message = '';
 
   constructor(private userService: UserService, private router: Router) {}
 
   onSubmit() {
+    if (this.password !== this.confirmPassword) {
+      this.message = 'Passwords do not match';
+      return;
+    }
     this.userService.register(this.username, this.password).subscribe((result) => {
       if (result.success) {
         this.router.navigate(['auth', 'login']);

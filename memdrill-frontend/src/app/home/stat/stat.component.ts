@@ -8,16 +8,15 @@ import { Stat } from './stat';
   styleUrls: ['./stat.component.scss']
 })
 export class StatComponent implements OnInit {
-
   stat: Stat;
+  isLoading = true;
 
-  constructor(private calculationService: CalculationService) { }
+  constructor(private calculationService: CalculationService) {}
 
   ngOnInit(): void {
-    this.calculationService.stats().subscribe((result) => {
-      console.log(result);
+    this.calculationService.getStats().subscribe((result) => {
       this.stat = result;
+      this.isLoading = false;
     });
   }
-
 }

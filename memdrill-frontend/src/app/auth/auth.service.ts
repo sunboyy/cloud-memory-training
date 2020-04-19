@@ -32,6 +32,10 @@ export class AuthService {
     sessionStorage.removeItem(this.ACCESS_TOKEN_KEY);
   }
 
+  getAccessToken(): string {
+    return sessionStorage.getItem(this.ACCESS_TOKEN_KEY);
+  }
+
   get isLoggedIn(): boolean {
     return sessionStorage.getItem(this.ACCESS_TOKEN_KEY) !== null;
   }
