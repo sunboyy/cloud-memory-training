@@ -4,8 +4,9 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: memdrill
   backend:
-    image: memdrill-backend
+    build: memdrill-backend
     environment:
       MYSQL_HOST: db
       MYSQL_PASSWORD: password
