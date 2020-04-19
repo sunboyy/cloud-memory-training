@@ -17,7 +17,6 @@ export class SpeechToTextService {
 
     const file = readFileSync(tempRawPath);
     const audioBytes = file.toString('base64');
-    console.log('audioBytes:' + audioBytes);
 
     return await this.transcribeLinear16(audioBytes);
   }
