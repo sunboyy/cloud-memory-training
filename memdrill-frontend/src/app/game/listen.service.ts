@@ -18,6 +18,7 @@ export class ListenService {
 
       mediaRecorder.addEventListener('dataavailable', (event) => {
         audioChunks.push(event.data);
+        console.log(event.data);
       });
 
       const start = () => mediaRecorder.start();
@@ -25,16 +26,22 @@ export class ListenService {
       const stop = () =>
         new Promise((resolve) => {
           mediaRecorder.addEventListener('stop', () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm;codecs=opus' });
             const audioUrl = URL.createObjectURL(audioBlob);
             const audio = new Audio(audioUrl);
             const play = () => audio.play();
+            console.log("audioBlob, audioUrl, audio");
+            console.log(audioUrl);
+            console.log(audio);
 
-            const save = (name, body) => {
-              console.log(name);
-              console.log(body);
-            };
-            resolve({ audioBlob, audioUrl, play, save, audioChunks });
+            var reader = new FileReader();
+            reader.readAsDataURL(audioBlob);
+            var base64data;
+            reader.onloadend = function() {
+                base64data = reader.result;
+                console.log('complete reading');
+                resolve({ audioBlob, audioUrl, play, audioChunks, base64data });
+            }
           });
 
           mediaRecorder.stop();
@@ -49,10 +56,11 @@ export class ListenService {
 
     const recorder = await this.getRecorder();
     recorder.start();
-    await sleep(3000);
+    await sleep(1000);
     const audio = await recorder.stop();
     audio.play();
-    console.log(audio.audioUrl);
-    return audio.audioUrl;
+    return audio.base64data;
   }
+
+
 }

@@ -6,8 +6,8 @@ async function main() {
   // Creates a client
   const client = new speech.SpeechClient();
 
-  const input_file = 'output.mp3';
-  const output_file = 'testimory.raw';
+  const input_file = '1002temp';
+  const output_file = '1002.raw';
   
   const outPath = await linear16(input_file, output_file);
   console.log('converted to: '+outPath); // Returns the output path, ex: ./output.wav
@@ -21,15 +21,15 @@ async function main() {
   // Reads a local audio file and converts it to base64
   const file = fs.readFileSync(fileName);
   const audioBytes = file.toString('base64');
-
+  console.log('start :'+ audioBytes);
   // The audio file's encoding, sample rate in hertz, and BCP-47 language code
   const audio = {
     content: audioBytes,
   };
   const config = {
     encoding: 'LINEAR16',
-    sampleRateHertz: 12000,
-    languageCode: 'en-US',
+    sampleRateHertz: 16000,
+    languageCode: 'th-TH',
   };
   const request = {
     audio: audio,
