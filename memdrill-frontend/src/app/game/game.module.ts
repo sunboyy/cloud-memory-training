@@ -6,10 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GameComponent } from './game.component';
 import { LevelComponent } from './level/level.component';
+import { PracticeComponent } from './practice/practice.component';
 
 
 @NgModule({
-  declarations: [GameComponent, LevelComponent],
+  declarations: [GameComponent, LevelComponent, PracticeComponent],
   imports: [
     CommonModule, FormsModule, HttpClientModule, RouterModule
   ]

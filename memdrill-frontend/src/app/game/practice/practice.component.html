@@ -1,0 +1,15 @@
+<div class="layout">
+  <div class="number">{{no}}</div>
+  <div class="question">{{factorA}} {{operatorSign}} {{factorB}} = ?</div>
+  <div>
+    <button (mousedown)="listen()" (mouseup)="stopListen()" class="microphone">
+      <span class="material-icons">mic</span>
+    </button>
+  </div>
+
+  <div class="navigate">
+    <button (click)="exit()" class="cancel">Exit</button>
+    <button (click)="nextQuestion()" *ngIf="no < maxNumber" class="action">Submit</button>
+    <button (click)="exit()" *ngIf="no == maxNumber" class="action">Finish</button>
+  </div>
+</div>
