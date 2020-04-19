@@ -16,6 +16,7 @@ export class PracticeComponent implements OnInit {
   signature: string;
   no = 0;
   maxNumber = 5;
+  recorder;
 
   get operatorSign(): string {
     if (this.operator === 'add') {
@@ -39,7 +40,6 @@ export class PracticeComponent implements OnInit {
   }
 
   getQuestion(difficulty: string): any {
-    console.log(difficulty);
     this.questionService.getQuestion(difficulty).subscribe((result) => {
       if (result.success === true) {
         const value = result.value;
@@ -57,16 +57,24 @@ export class PracticeComponent implements OnInit {
 
   nextQuestion(): void {
     this.getQuestion(this.difficulty);
+    // send to backend
+    //
     this.no += 1;
   }
 
-  async listen() {
-    console.log('listen');
-    const url = await this.listenService.triggerListen();
-    console.log(url);
+  async startRecode() {
+    console.log('Start listening for 3 seconds . . .');
+    this.recorder = await this.listenService.triggerListen1();
   }
 
-  stopListen(): void {
+  async stopRecode() {
     console.log('stop');
+    if (this.recorder) {
+      this.listenService.stop(this.recorder);
+      const data = await this.listenService.triggerListen();
+      const base64data = data.split(',')[1]
+      console.log(base64data);
+    }
   }
+
 }

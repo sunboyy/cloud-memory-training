@@ -2,7 +2,7 @@
   <div class="number">{{no}}</div>
   <div class="question">{{factorA}} {{operatorSign}} {{factorB}} = ?</div>
   <div>
-    <button (mousedown)="listen()" (mouseup)="stopListen()" class="microphone">
+    <button (mousedown)="startRecode()" (mouseup)="stopRecode()" class="microphone">
       <span class="material-icons">mic</span>
     </button>
   </div>

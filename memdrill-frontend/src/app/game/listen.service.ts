@@ -62,5 +62,18 @@ export class ListenService {
     return audio.base64data;
   }
 
+  async triggerListen1(): Promise<any> {
+    const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+
+    const recorder = await this.getRecorder();
+    recorder.start();
+    return recorder;
+  }
+
+  async stop(recorder) {
+    const audio = await recorder.stop();
+    audio.play();
+    return audio.base64data;
+  }
 
 }
