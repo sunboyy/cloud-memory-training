@@ -1,6 +1,7 @@
 <div class="layout">
-  <div class="container-info">
-    <h1 class="header">Your Stats</h1>
+  <h1 class="header">Your Stats</h1>
+  <p *ngIf="isLoading">Loading...</p>
+  <div class="container-info" *ngIf="!isLoading">
     <div class="title-a">Total Calculations</div>
     <div class="item-aa">{{ stat.totalCalculations }}</div>
 
