@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { SpeechClient } from '@google-cloud/speech';
-import linear16 from 'linear16';
+import * as linear16 from 'linear16';
 import { readFileSync, writeFileSync } from 'fs';
 
 @Injectable()
