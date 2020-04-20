@@ -7,15 +7,14 @@ import { readFileSync, writeFileSync } from 'fs';
 export class SpeechToTextService {
   async toText(base64data: string): Promise<string> {
     const tempOriginal = 'temp.weba';
-    const tempRaw = 'tempraw.raw';
+    const tempRaw = 'temp.raw';
 
     const buff = Buffer.from(base64data, 'base64');
     writeFileSync(tempOriginal, buff);
 
-    // Returns the output path, ex: ./output.wav
-    const tempRawPath = await linear16(tempOriginal, tempRaw);
+    await linear16(tempOriginal, tempRaw);
 
-    const file = readFileSync(tempRawPath);
+    const file = readFileSync(tempRaw);
     const audioBytes = file.toString('base64');
 
     return await this.transcribeLinear16(audioBytes);
