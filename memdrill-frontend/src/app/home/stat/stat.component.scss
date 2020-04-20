@@ -29,6 +29,11 @@ h1 {
   background-color: $color;
 }
 
+.title {
+  font-family: Kanit, sans-serif;
+  text-align: center;
+  font-size: 18px;
+}
 
 .header {
   grid-area: header;
@@ -41,9 +46,6 @@ h1 {
 }
 .title-c {
   grid-area: title3;
-}
-div[class^="title-"] {
-  text-align: center;
 }
 
 .item-aa {
@@ -61,7 +63,7 @@ div[class^="title-"] {
 
 .container-info {
   display: grid;
-  margin: 40px 0 60px 0;
+  margin: 24px 0 48px 0;
   grid-template-columns: 120px 120px 120px;;
   grid-template-rows: auto;
   grid-template-areas:
@@ -69,7 +71,7 @@ div[class^="title-"] {
     "title1 title2 title3"
     "score1 score2 score3";
   column-gap: 40px;
-  row-gap: 15px;
+  row-gap: 16px;
   justify-items: center;
 }
 
