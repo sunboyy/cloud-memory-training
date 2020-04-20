@@ -1,8 +1,8 @@
 <div class="layout">
   <div class="number">{{no}}.</div>
   <section class="question">
-    {{factorA}} {{operatorSign}} {{factorB}} =
-    <input [(ngModel)]="answer" type="number">
+    {{calculation.factorA}} {{operatorSign}} {{calculation.factorB}} =
+    <input [(ngModel)]="calculation.answer" type="number">
   </section>
   <section class="container-record">
     <button (mousedown)="startRecord()" (mouseup)="stopRecord()" class="microphone" [disabled]="isLoading">
@@ -15,7 +15,7 @@
 
   <div class="navigate">
     <button (click)="exit()" class="cancel">Exit</button>
-    <button (click)="submit()" class="action" [disabled]="!answer || result">Submit</button>
+    <button (click)="submit()" class="action" [disabled]="!calculation.answer || result">Submit</button>
   </div>
 </div>
 

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Stat, AnswerForm } from '../interfaces';
+import { Stat, Calculation } from '../interfaces';
 import { AuthService } from '../auth/auth.service';
 import { APIResponse } from '../interfaces';
 
@@ -22,11 +22,16 @@ export class CalculationService {
     });
   }
 
-  submitAnswer(answerForm: AnswerForm): Observable<APIResponse> {
-    console.log(answerForm);
+  submitAnswer(calculation: Calculation): Observable<APIResponse> {
     console.log(this.getHeaders());
-    return this.http.post<APIResponse>(environment.baseApiUrl + 'calculation/submit', answerForm, {
-      headers: this.getHeaders()
-    });
+    return this.http.post<APIResponse>(
+      environment.baseApiUrl + 'calculation/submit',
+      {
+        calculation
+      },
+      {
+        headers: this.getHeaders()
+      }
+    );
   }
 }

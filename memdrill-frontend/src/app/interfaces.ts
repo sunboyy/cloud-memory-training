@@ -10,21 +10,11 @@ export interface Stat {
   totalScore: number;
 }
 
-export interface QuestionResponse {
+export interface Calculation {
   factorA: number;
   factorB: number;
   operator: string;
   difficulty: string;
   signature: string;
-}
-
-export interface AnswerForm {
-  calculation: {
-    factorA: number;
-    factorB: number;
-    operator: string;
-    difficulty: string;
-    signature: string;
-    answer: number;
-  };
+  answer?: number;
 }

@@ -4,6 +4,7 @@ import { QuestionService } from '../question.service';
 import { ListenService } from '../listen.service';
 import { CalculationService } from 'src/app/home/calculation.service';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { Calculation } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-practice',
@@ -13,10 +14,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
         style({ opacity: 0 }),
         animate('200ms ease-out', style({ opacity: 1 }))
       ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('200ms ease-in', style({ opacity: 0 }))
-      ])
+      transition(':leave', [style({ opacity: 1 }), animate('200ms ease-in', style({ opacity: 0 }))])
     ])
   ],
   templateUrl: './practice.component.html',
@@ -24,10 +22,6 @@ import { trigger, style, animate, transition } from '@angular/animations';
 })
 export class PracticeComponent implements OnInit {
   difficulty: string;
-  factorA: number;
-  factorB: number;
-  operator: string;
-  signature: string;
   no = 0;
   maxNumber = 10;
   recorder;
@@ -38,8 +32,10 @@ export class PracticeComponent implements OnInit {
   isLoading = false;
   isRecording = false;
 
+  calculation: Calculation;
+
   get operatorSign(): string {
-    if (this.operator === 'add') {
+    if (this.calculation.operator === 'add') {
       return '+';
     } else {
       return '-';
@@ -51,7 +47,7 @@ export class PracticeComponent implements OnInit {
     private questionService: QuestionService,
     private router: Router,
     private listenService: ListenService,
-    private calculation: CalculationService
+    private calculationService: CalculationService
   ) {}
 
   ngOnInit(): void {
@@ -64,10 +60,7 @@ export class PracticeComponent implements OnInit {
     this.questionService.getQuestion(difficulty).subscribe((result) => {
       if (result.success === true) {
         const value = result.value;
-        this.factorA = value.factorA;
-        this.factorB = value.factorB;
-        this.operator = value.operator;
-        this.signature = value.signature;
+        this.calculation = value;
       }
     });
   }
@@ -77,42 +70,28 @@ export class PracticeComponent implements OnInit {
   }
 
   submit(): void {
-    this.calculation
-      .submitAnswer({
-        calculation: {
-          factorA: this.factorA,
-          factorB: this.factorB,
-          operator: this.operator,
-          difficulty: this.difficulty,
-          signature: this.signature,
-          answer: this.answer
-        }
-      })
-      .subscribe((result) => {
-        console.log(result);
-        if (result.success) {
-          this.result = result.value;
-        }
-      });
+    this.calculationService.submitAnswer(this.calculation).subscribe((result) => {
+      console.log(result);
+      if (result.success) {
+        this.result = result.value;
+      }
+    });
   }
 
   next(): void {
     this.getQuestion(this.difficulty);
     this.no += 1;
-    this.answer = null;
     this.result = '';
     this.message = '';
   }
 
   checkRecord() {
     this.isLoading = true;
-    // console.log(this.base64Data);
     this.message = '';
     this.questionService.submitRecord(this.base64Data).subscribe((result) => {
-      // console.log(result);
       this.isLoading = false;
-      this.answer = result;
-      if (!this.answer) {
+      this.calculation.answer = result;
+      if (!this.calculation.answer) {
         this.message = 'Please try again!';
       }
     });
