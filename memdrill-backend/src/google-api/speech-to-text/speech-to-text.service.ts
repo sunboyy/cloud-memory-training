@@ -9,7 +9,7 @@ export class SpeechToTextService {
     const tempOriginal = 'temp.weba';
     const tempRaw = 'tempraw.raw';
 
-    const buff = new Buffer(base64data, 'base64');
+    const buff = Buffer.from(base64data, 'base64');
     writeFileSync(tempOriginal, buff);
 
     // Returns the output path, ex: ./output.wav
