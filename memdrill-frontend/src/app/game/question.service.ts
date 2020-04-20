@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { APIResponse } from '../interfaces';
+import { APIResponse, QuestionResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,24 +16,9 @@ export class QuestionService {
     });
   }
 
-  sendAnswer() {}
-}
-
-export interface QuestionResponse {
-  factorA: number;
-  factorB: number;
-  operator: string;
-  difficulty: string;
-  signature: string;
-}
-
-export interface AnswerForm {
-  calculation: {
-    factorA: number;
-    factorB: number;
-    operator: string;
-    difficulty: string;
-    signature: string;
-    answer: number;
-  };
+  submitRecord(base64Data: string): Observable<any> {
+    return this.http.post<any>(environment.baseApiUrl + 'google-api/stt', {
+      audio: { base64Data }
+    });
+  }
 }

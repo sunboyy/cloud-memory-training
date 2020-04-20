@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { QuestionService, QuestionResponse } from './question.service';
+import { QuestionService } from './question.service';
 import { ListenService } from './listen.service';
 
 @Component({
