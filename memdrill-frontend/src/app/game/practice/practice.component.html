@@ -1,5 +1,6 @@
+<app-progress [value]="progressValue" [max]="maxQuestion"></app-progress>
 <div class="layout">
-  <div class="number">{{no}}.</div>
+  <div class="number">{{currentQuestion}}.</div>
   <section class="question">
     {{calculation.factorA}} {{operatorSign}} {{calculation.factorB}} =
     <input [(ngModel)]="calculation.answer" type="number">
@@ -14,8 +15,8 @@
   </section>
 
   <div class="navigate">
-    <button (click)="exit()" class="cancel">Exit</button>
-    <button (click)="submit()" class="action" [disabled]="!calculation.answer || result">Submit</button>
+    <button (click)="onExit()" class="cancel">Exit</button>
+    <button (click)="onSubmit()" class="action" [disabled]="!calculation.answer || result">Submit</button>
   </div>
 </div>
 
@@ -23,6 +24,6 @@
   <div *ngIf="result == 'Incorrect'" class="material-icons clear">clear</div>
   <div *ngIf="result == 'Correct'" class="material-icons done">done</div>
   <div class="result">{{ result }}</div>
-  <button (click)="next()" *ngIf="no < maxNumber" class="action">Next</button>
-  <button (click)="exit()" *ngIf="no == maxNumber" class="action">Finish</button>
+  <button (click)="onNext()" *ngIf="currentQuestion < maxQuestion" class="action">Next</button>
+  <button (click)="onExit()" *ngIf="currentQuestion == maxQuestion" class="action">Finish</button>
 </section>

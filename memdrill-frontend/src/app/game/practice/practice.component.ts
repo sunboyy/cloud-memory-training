@@ -22,8 +22,9 @@ import { Calculation } from 'src/app/interfaces';
 })
 export class PracticeComponent implements OnInit {
   difficulty: string;
-  no = 0;
-  maxNumber = 10;
+  progressValue = 0;
+  currentQuestion = 0;
+  maxQuestion = 10;
   recorder;
   base64Data: string;
   answer: number;
@@ -52,12 +53,12 @@ export class PracticeComponent implements OnInit {
 
   ngOnInit(): void {
     this.difficulty = this.route.snapshot.paramMap.get('difficulty');
-    this.getQuestion(this.difficulty);
-    this.no = 1;
+    this.nextQuestion();
   }
 
-  getQuestion(difficulty: string): any {
-    this.questionService.getQuestion(difficulty).subscribe((result) => {
+  nextQuestion(): any {
+    this.currentQuestion++;
+    this.questionService.getQuestion(this.difficulty).subscribe((result) => {
       if (result.success === true) {
         const value = result.value;
         this.calculation = value;
@@ -65,22 +66,21 @@ export class PracticeComponent implements OnInit {
     });
   }
 
-  exit(): void {
+  onExit(): void {
     this.router.navigate(['']);
   }
 
-  submit(): void {
+  onSubmit(): void {
     this.calculationService.submitAnswer(this.calculation).subscribe((result) => {
-      console.log(result);
       if (result.success) {
         this.result = result.value;
+        this.progressValue++;
       }
     });
   }
 
-  next(): void {
-    this.getQuestion(this.difficulty);
-    this.no += 1;
+  onNext(): void {
+    this.nextQuestion();
     this.result = '';
     this.message = '';
   }
