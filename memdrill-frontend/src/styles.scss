@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'https://fonts.googleapis.com/css?family=Kanit&display=swap';
 
 @font-face {
   font-family: Homework;
@@ -22,6 +23,18 @@
     url('assets/fonts/Material/MaterialIcons-Regular.woff2') format('woff2'),
     url('assets/fonts/Material/MaterialIcons-Regular.woff') format('woff'),
     url('assets/fonts/Material/MaterialIcons-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'FC Lamoon';
+  font-weight: normal;
+  src: url('assets/fonts/fc-lamoon-regular.otf');
+}
+
+@font-face {
+  font-family: 'FC Lamoon';
+  font-weight: bold;
+  src: url('assets/fonts/fc-lamoon-bold.ttf');
 }
 
 .material-icons {
@@ -48,7 +61,12 @@ body {
   margin: 0px;
   font-family: Roboto, Pridi, serif;
 }
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: Homework, Kanit, serif;
+  font-family: Homework, 'FC Lamoon', Kanit, serif;
   margin: 16px 0;
+}
+
+h1 {
+  font-size: 44px;
 }

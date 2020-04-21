@@ -18,7 +18,6 @@ export class ListenService {
 
       mediaRecorder.addEventListener('dataavailable', (event) => {
         audioChunks.push(event.data);
-        console.log(event.data);
       });
 
       const start = () => mediaRecorder.start();
@@ -30,15 +29,11 @@ export class ListenService {
             const audioUrl = URL.createObjectURL(audioBlob);
             const audio = new Audio(audioUrl);
             const play = () => audio.play();
-            console.log('audioBlob, audioUrl, audio');
-            console.log(audioUrl);
-            console.log(audio);
 
             const reader = new FileReader();
             reader.readAsDataURL(audioBlob);
             reader.onloadend = () => {
               const base64data = reader.result;
-              console.log('complete reading');
               resolve({ audioBlob, audioUrl, play, audioChunks, base64data });
             };
           });
@@ -62,16 +57,14 @@ export class ListenService {
   }
 
   async triggerListen1(): Promise<any> {
-    const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
-
     const recorder = await this.getRecorder();
     recorder.start();
     return recorder;
   }
 
-  async stop(recorder) {
+  async stop(recorder): Promise<string> {
     const audio = await recorder.stop();
-    audio.play();
+    // audio.play();
     return audio.base64data;
   }
 }

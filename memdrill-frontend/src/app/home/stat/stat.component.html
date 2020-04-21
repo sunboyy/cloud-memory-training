@@ -1,14 +1,14 @@
 <div class="layout">
-  <h1 class="header">Your Stats</h1>
+  <h1 class="header">สถิติของคุณ</h1>
   <p *ngIf="isLoading">Loading...</p>
   <div class="container-info" *ngIf="!isLoading">
-    <div class="title-a">Total Calculations</div>
+    <div class="title title-a">จำนวนโจทย์ที่เคยเล่น</div>
     <div class="item-aa">{{ stat.totalCalculations }}</div>
 
-    <div class="title-b">Correct Calculations</div>
+    <div class="title title-b">จำนวนโจทย์ที่ตอบถูก</div>
     <div class="item-bb">{{ stat.correctCalculations }}</div>
 
-    <div class="title-c">Total Score</div>
+    <div class="title title-c">คะแนนรวม</div>
     <div class="item-cc">{{ stat.totalScore }}</div>
   </div>
 

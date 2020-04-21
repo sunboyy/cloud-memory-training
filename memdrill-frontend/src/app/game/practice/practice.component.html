@@ -1,15 +1,29 @@
+<app-progress [value]="progressValue" [max]="maxQuestion"></app-progress>
 <div class="layout">
-  <div class="number">{{no}}</div>
-  <div class="question">{{factorA}} {{operatorSign}} {{factorB}} = ?</div>
-  <div>
-    <button (mousedown)="startRecode()" (mouseup)="stopRecode()" class="microphone">
+  <div class="number">{{currentQuestion}}.</div>
+  <section class="question">
+    {{calculation.factorA}} {{operatorSign}} {{calculation.factorB}} =
+    <input [(ngModel)]="calculation.answer" type="number">
+  </section>
+  <section class="container-record">
+    <button (mousedown)="startRecord()" (mouseup)="stopRecord()" class="microphone" [disabled]="isLoading">
       <span class="material-icons">mic</span>
     </button>
-  </div>
+    <div *ngIf="isLoading" class="message">Loading . . .</div>
+    <div *ngIf="isRecording" class="message">Recording . . .</div>
+    <app-error [text]="message" class="message"></app-error>
+  </section>
 
   <div class="navigate">
-    <button (click)="exit()" class="cancel">Exit</button>
-    <button (click)="nextQuestion()" *ngIf="no < maxNumber" class="action">Submit</button>
-    <button (click)="exit()" *ngIf="no == maxNumber" class="action">Finish</button>
+    <button (click)="onExit()" class="cancel">Exit</button>
+    <button (click)="onSubmit()" class="action" [disabled]="!calculation.answer || result">Submit</button>
   </div>
 </div>
+
+<section class="popup" *ngIf="result" [@enterAnimation]>
+  <div *ngIf="result == 'Incorrect'" class="material-icons clear">clear</div>
+  <div *ngIf="result == 'Correct'" class="material-icons done">done</div>
+  <div class="result">{{ result }}</div>
+  <button (click)="onNext()" *ngIf="currentQuestion < maxQuestion" class="action">Next</button>
+  <button (click)="onExit()" *ngIf="currentQuestion == maxQuestion" class="action">Finish</button>
+</section>

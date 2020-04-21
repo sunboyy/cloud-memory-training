@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { QuestionService, QuestionResponse } from './question.service';
+import { QuestionService } from './question.service';
 import { ListenService } from './listen.service';
 
 @Component({
@@ -33,7 +33,6 @@ export class GameComponent {
   }
 
   getQuestion(difficulty: string): any {
-    console.log(difficulty);
     this.questionService.getQuestion(difficulty).subscribe((result) => {
       if (result.success === true) {
         const value = result.value;
@@ -48,30 +47,18 @@ export class GameComponent {
         }
       }
     });
-    //TODO: call Text To Speech and play sound here
   }
 
   async listen() {
     console.log('Start listening for 3 seconds . . .');
-    var base64data = await this.listenService.triggerListen();
-    base64data = base64data.split(',')[1]
-    // const url = await this.listenService.triggerListen();
-    // console.log(url);
-    // this.audioUrl = url;
-    // this.audioName = 'audio_recording_' + new Date().getTime() + '.wav';
-    // const link = document.createElement('a');
-    // link.href = url;
-    // link.innerHTML = 'LINK FROM CREATE ELEMENT';
-    // document.body.appendChild(link);
-    console.log(base64data);
+    let base64data = await this.listenService.triggerListen();
+    base64data = base64data.split(',')[1];
     const answer = this.sendAudio(base64data);
   }
 
-  sendAudio(base64data){
-//POST to localhost:3000/google-api/stt
-//audio:{base64Data:}
-
-
+  sendAudio(base64data) {
+    // POST to localhost:3000/google-api/stt
+    // audio:{base64Data:}
   }
 
   stopListen() {
