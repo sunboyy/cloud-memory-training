@@ -23,7 +23,6 @@ export class CalculationService {
   }
 
   submitAnswer(calculation: Calculation): Observable<APIResponse> {
-    console.log(this.getHeaders());
     return this.http.post<APIResponse>(
       environment.baseApiUrl + 'calculation/submit',
       {

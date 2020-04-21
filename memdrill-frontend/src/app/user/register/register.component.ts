@@ -25,7 +25,6 @@ export class RegisterComponent {
       if (result.success) {
         this.router.navigate(['auth', 'login']);
       } else {
-        console.log(result);
         this.message = result.error;
       }
     });
