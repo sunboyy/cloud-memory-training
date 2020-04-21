@@ -4,16 +4,16 @@ import { Injectable } from '@nestjs/common';
 export class RandomGeneratorService {
   difficulties = {
     easy: {
-      minimumFactor: 5,
-      maximumFactor: 99,
+      minimumFactor: 2,
+      maximumFactor: 30,
     },
     normal: {
-      minimumFactor: 50,
-      maximumFactor: 999,
+      minimumFactor: 30,
+      maximumFactor: 200,
     },
     hard: {
-      minimumFactor: 500,
-      maximumFactor: 9999,
+      minimumFactor: 200,
+      maximumFactor: 1200,
     },
   };
 

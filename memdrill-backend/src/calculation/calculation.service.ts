@@ -21,8 +21,12 @@ export class CalculationService {
     calculation.factorA = this.randomGeneratorService.generateRandomFactor(difficulty);
     calculation.factorB = this.randomGeneratorService.generateRandomFactor(difficulty);
     calculation.operator = this.randomGeneratorService.generateRandomOperator();
-    if (calculation.operator === 'sub' && calculation.factorA < calculation.factorB) {
-      [calculation.factorA, calculation.factorB] = [calculation.factorB, calculation.factorA];
+    if (calculation.operator === 'sub') {
+      if (calculation.factorA === calculation.factorB) {
+        calculation.factorA++;
+      } else if (calculation.factorA < calculation.factorB) {
+        [calculation.factorA, calculation.factorB] = [calculation.factorB, calculation.factorA];
+      }
     }
     calculation.difficulty = difficulty;
     calculation.signature = this.createSignature(calculation);
