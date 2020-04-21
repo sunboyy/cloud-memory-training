@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseApiUrl: 'http://backend.memdrill.mrsunboy.com/'
+  baseApiUrl: 'https://backend.memdrill.mrsunboy.com/'
 };
 
 /*
