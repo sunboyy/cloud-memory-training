@@ -28,10 +28,6 @@ export class GameComponent {
     this.myAudio.nativeElement.play();
   }
 
-  get audioSrc() {
-    return '/assets/voice/' + this.message + '.wav';
-  }
-
   getQuestion(difficulty: string): any {
     this.questionService.getQuestion(difficulty).subscribe((result) => {
       if (result.success === true) {
