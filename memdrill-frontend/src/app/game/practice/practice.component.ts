@@ -90,8 +90,9 @@ export class PracticeComponent implements OnInit {
     this.message = '';
     this.questionService.submitRecord(this.base64Data).subscribe((result) => {
       this.isLoading = false;
-      this.calculation.answer = result;
-      if (!this.calculation.answer) {
+      if (result && typeof result === 'number') {
+        this.calculation.answer = result;
+      } else {
         this.message = 'Please try again!';
       }
     });

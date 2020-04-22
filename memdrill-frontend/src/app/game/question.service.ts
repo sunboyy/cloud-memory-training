@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { APIResponse, Calculation } from '../interfaces';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,14 @@ export class QuestionService {
   }
 
   submitRecord(base64Data: string): Observable<any> {
-    return this.http.post<any>(environment.baseApiUrl + 'google-api/stt', {
-      audio: { base64Data }
-    });
+    return this.http
+      .post<any>(environment.baseApiUrl + 'google-api/stt', { audio: { base64Data } })
+      .pipe(
+        catchError(
+          (err: HttpErrorResponse): Observable<any> => {
+            return of(null);
+          }
+        )
+      );
   }
 }
